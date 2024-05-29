@@ -24,7 +24,8 @@ class ContactController extends Controller
      */
     public function create()
     {
-        //
+        $contacts = Contact::with('organisation')->get();
+        return view('add_contact_modal', compact('contacts'));
     }
 
     /**
@@ -32,7 +33,21 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $contacts = new contact([
+            'organisation_id' => $request->get('organisation_id')
+        ]);
+
+        $contacts->cle = $request->cle;
+        $contacts->e_mail = $request->e_mail;
+        $contacts->nom = $request->nom;
+        $contacts->prenom = $request->prenom;
+        $contacts->telephone_fixe = $request->telephone_fixe;
+        $contacts->service = $request->service;
+        $contacts->fonction = $request->fonction;
+        $contacts->save();
+        return redirect('/')->with('success', 'Contact Ajouter avec success');
+
+
     }
 
     /**

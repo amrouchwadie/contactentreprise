@@ -11,6 +11,18 @@ class contact extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $fillable = [
+        'cle',
+        'organisation_id',
+        'e_mail',
+        'nom',
+        'prenom',
+        'telephone_fixe',
+        'service',
+        'fonction',
+    ];
+
+
     public function organisation()
     {
         return $this->belongsTo(organisation::class);
