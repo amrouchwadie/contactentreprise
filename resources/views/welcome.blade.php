@@ -20,10 +20,10 @@
         <div class="mb-4 flex items-center">
             <form action="{{ route('contacts.search') }}" method="GET">
                 <input type="text" name="query" class="border border-gray-300 rounded-md px-6 py-2 mr-2" placeholder="Rechercher...">
-                <button type="submit">Search</button>
+                <button type="submit">Recherche</button>
             </form>
             
-            <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded ml-auto">+ Ajouter</button>
+            <button id="addButton" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded ml-auto">+ Ajouter</button>
         </div>
         <div class="overflow-x-auto">
             <table class="table-auto min-w-full divide-y divide-gray-200">
@@ -132,6 +132,18 @@
             
         </div>
     </div>
+    @include('add_contact_modal') <!-- Include the modal here -->
+
+    @section('scripts')
+<script>
+document.getElementById('addButton').addEventListener('click', function() {
+    document.getElementById('addModal').classList.remove('hidden');
+});
+
+document.getElementById('closeButton').addEventListener('click', function() {
+    document.getElementById('addModal').classList.add('hidden');
+});
+</script>
     <script>
     function loadContactInfo(id) {
         fetch("/contact-info/" + id)
