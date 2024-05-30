@@ -11,9 +11,28 @@ class ContactController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $contacts = Contact::with('organisation')->paginate(10);
+        
+        $query = Contact::with('organisation');
+
+        // Handle sorting
+        if ($request->has('sort')) {
+            $sortField = $request->input('sort');
+    
+            if ($sortField === 'statut') {
+                // Sort by the 'statut' field from the organisations table
+                $query->leftJoin('organisations', 'contacts.organisation_id', '=', 'organisations.id')
+                      ->orderBy('organisations.statut');
+            } else {
+                // For other fields, simply orderBy on the contacts table
+                $query->orderBy($sortField);
+            }
+        }
+    
+        // Paginate the results
+        $contacts = $query->paginate(10);
+        
         return view('welcome', compact('contacts'));
     }
 
