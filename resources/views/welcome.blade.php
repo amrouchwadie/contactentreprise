@@ -29,11 +29,18 @@
             <table class="table-auto min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                     <tr>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">NOM DU CONTACT</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">SOCIETE</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">STATUS</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <a href="{{ request()->fullUrlWithQuery(['sort' => 'id']) }}">ID</a>
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <a href="{{ request()->fullUrlWithQuery(['sort' => 'nom']) }}">NOM DU CONTACT</a>
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <a href="{{ request()->fullUrlWithQuery(['sort' => 'organisation_id']) }}">SOCIETE</a>
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <a href="{{ request()->fullUrlWithQuery(['sort' => 'statut']) }}">STATUS</a>
+                        </th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
