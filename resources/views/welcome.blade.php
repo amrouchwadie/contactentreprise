@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Laravel</title>
+    <title>Contact Entreprise</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
@@ -60,10 +60,42 @@
                                 </span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                {{-- <button type="button"  class="btn btn-primary">👁️</button> --}}
-                                <button type="button"  onclick="loadContactInfo({{ $contact->id }})">
-                                    👁️
-                                </button>
+                                <table >
+                                    <tbody>
+                                    <tr>
+                                    <td> <button type="button"  onclick="loadContactInfo({{ $contact->id }})">
+                                        👁️
+                                    </button>
+     <td>
+                                    <td >    <button 
+                                        class="editButton "
+                                        data-id="{{ $contact->id }}"
+                                        data-cle="{{ $contact->cle }}"
+                                        data-nom="{{ $contact->nom }}"
+                                        data-prenom="{{ $contact->prenom }}"
+                                        data-organisation-id="{{ $contact->organisation->id }}"
+                                        data-e-mail="{{ $contact->e_mail }}"
+                                        data-telephone-fixe="{{ $contact->telephone_fixe }}"
+                                        data-service="{{ $contact->service }}"
+                                        data-fonction="{{ $contact->fonction }}"
+                                        >
+                                        🖊️
+                                        </button>
+                                    </td>
+                                    <td >
+                                        
+                                        <form action="{{ route('contact.destroy', $contact->id)}}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            
+                                            <button class="btn btn-danger" type="submit" onclick="return confirm('Etes-vous sûr de la suppression?');">🗑️</button>
+                                    </form>
+                                    </td>
+                                    </tr>
+                                    </tbody>
+                                    </table>
+                               
+                            
 
                                 <!-- Modal -->
 <div class="fixed z-10 inset-0 overflow-y-auto hidden" id="contactModal" aria-labelledby="modal-title" role="dialog" aria-modal="true">
@@ -94,13 +126,7 @@
     </div>
 </div>
                                 
-                                <a href="#">🖊️</a>
-                                <form action="{{ route('contact.destroy', $contact->id)}}" method="post">
-                                    @csrf
-                                    @method('DELETE')
-                                    
-                                    <button class="btn btn-danger" type="submit" onclick="return confirm('Etes-vous sûr de la suppression?');">🗑️</button>
-                            </form>
+                   
                             </td>
                         </tr>
                     @endforeach
@@ -140,8 +166,47 @@
         </div>
     </div>
     @include('add_contact_modal') <!-- Include the modal here -->
-
+    @include('edit_contact_modal')
     @section('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        const editButtons = document.querySelectorAll('.editButton');
+        const editModal = document.getElementById('editModal');
+        const editCloseButton = document.getElementById('editCloseButton');
+
+        editButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const id = this.dataset.id;
+                const cle = this.dataset.cle;
+                const nom = this.dataset.nom;
+                const prenom = this.dataset.prenom;
+                const organisationId = this.dataset.organisationId;
+                const email = this.dataset.eMail;
+                const telephoneFixe = this.dataset.telephoneFixe;
+                const service = this.dataset.service;
+                const fonction = this.dataset.fonction;
+
+                const editForm = document.getElementById('editContactForm');
+                editForm.action = `/contacts/${id}`;
+                document.getElementById('edit_cle').value = cle;
+                document.getElementById('edit_nom').value = nom;
+                document.getElementById('edit_prenom').value = prenom;
+                document.getElementById('edit_organisation_id').value = organisationId;
+                document.getElementById('edit_e_mail').value = email;
+                document.getElementById('edit_telephone_fixe').value = telephoneFixe;
+                document.getElementById('edit_service').value = service;
+                document.getElementById('edit_fonction').value = fonction;
+
+                editModal.classList.remove('hidden');
+            });
+        });
+
+        editCloseButton.addEventListener('click', function () {
+            editModal.classList.add('hidden');
+        });
+    });
+    </script>
+    
 <script>
 document.getElementById('addButton').addEventListener('click', function() {
     document.getElementById('addModal').classList.remove('hidden');
@@ -151,6 +216,7 @@ document.getElementById('closeButton').addEventListener('click', function() {
     document.getElementById('addModal').classList.add('hidden');
 });
 </script>
+
     <script>
     function loadContactInfo(id) {
         fetch("/contact-info/" + id)
@@ -161,7 +227,6 @@ document.getElementById('closeButton').addEventListener('click', function() {
                 return response.json();
             })
             .then(data => {
-                // Populate modal with contact information
                 document.getElementById('contactInfo').innerHTML = `
                         <div class="space-y-14">
                             <!-- Profile Section -->
@@ -236,7 +301,6 @@ document.getElementById('closeButton').addEventListener('click', function() {
             })
             .catch(error => {
                 console.error('Error fetching contact info:', error);
-                // Display error message or handle error appropriately
             });
     }
 

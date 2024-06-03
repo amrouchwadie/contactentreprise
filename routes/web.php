@@ -12,3 +12,6 @@ Route::delete('/contact/{id}', [App\Http\Controllers\ContactController::class, '
 Route::get('/contacts/search', [App\Http\Controllers\ContactController::class, 'rechercher'])->name('contacts.search');
 Route::get('/contacts/add', [App\Http\Controllers\ContactController::class, 'create'])->name('add_contact_modal');
 Route::post('/contacts/add',[App\Http\Controllers\ContactController::class, 'store'])->name('contacts.store');
+
+Route::get('/contacts/{id}/edit', [App\Http\Controllers\ContactController::class, 'edit'])->name('edit_contact_modal.blade');
+Route::put('/contacts/{id}', [App\Http\Controllers\ContactController::class, 'update'])->name('contacts.update');

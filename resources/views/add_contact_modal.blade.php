@@ -1,4 +1,3 @@
-<!-- resources/views/modals/add_contact_modal.blade.php -->
 <div id="addModal" class="fixed z-10 inset-0 overflow-y-auto {{ session('confirm') ? '' : 'hidden' }}">
     <div class="flex items-center justify-center min-h-screen px-4">
         <div class="fixed inset-0 transition-opacity">
