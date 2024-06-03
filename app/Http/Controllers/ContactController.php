@@ -52,22 +52,60 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        $contacts = new contact([
-            'organisation_id' => $request->get('organisation_id')
-        ]);
-
-        $contacts->cle = $request->cle;
-        $contacts->e_mail = $request->e_mail;
-        $contacts->nom = $request->nom;
-        $contacts->prenom = $request->prenom;
-        $contacts->telephone_fixe = $request->telephone_fixe;
-        $contacts->service = $request->service;
-        $contacts->fonction = $request->fonction;
-        $contacts->save();
-        return redirect('/')->with('success', 'Contact Ajouter avec success');
-
-
+        // Check if confirmation is needed
+        if ($request->has('confirm') && $request->confirm == 'yes') {
+            // Save the new contact
+            $contacts = new Contact([
+                'organisation_id' => $request->get('organisation_id'),
+                'cle' => $request->cle,
+                'e_mail' => $request->e_mail,
+                'nom' => $request->nom,
+                'prenom' => $request->prenom,
+                'telephone_fixe' => $request->telephone_fixe,
+                'service' => $request->service,
+                'fonction' => $request->fonction,
+            ]);
+            
+            $contacts->save();
+    
+            return redirect('/')->with('success', 'Contact ajouté avec succès');
+        }
+    
+        // Check if a contact with the same nom and prenom exists
+        $existingContact = Contact::where('nom', $request->nom)
+                                  ->where('prenom', $request->prenom)
+                                  ->first();
+    
+        if ($existingContact) {
+            // If exists, redirect back with a message to confirm the action
+            return redirect()->back()->with([
+                'confirm' => 'Un contact existe déjà avec le même prénom et le même nom. 
+                              Êtes-vous sûr de vouloir ajouter ce contact ?',
+                'data' => $request->all()
+            ]);
+        }
+    
+        // If not exists, save the new contact directly
+        return $this->storeContact($request);
     }
+
+    private function storeContact($request)
+{
+    $contacts = new Contact([
+        'organisation_id' => $request->get('organisation_id'),
+        'cle' => $request->cle,
+        'e_mail' => $request->e_mail,
+        'nom' => $request->nom,
+        'prenom' => $request->prenom,
+        'telephone_fixe' => $request->telephone_fixe,
+        'service' => $request->service,
+        'fonction' => $request->fonction,
+    ]);
+
+    $contacts->save();
+
+    return redirect('/')->with('success', 'Contact ajouté avec succès');
+}
 
     /**
      * Display the specified resource.
@@ -86,17 +124,21 @@ class ContactController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(contact $contact)
+    public function edit($id)
     {
-        //
+        $contact = Contact::with('organisation')->findOrFail($id);
+        return response()->json($contact);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, contact $contact)
+    public function update(Request $request, contact $id)
     {
-        //
+        $contact = Contact::findOrFail($id);
+        $contact->update($request->all());
+    
+        return response()->json(['success' => true]);
     }
 
     /**
