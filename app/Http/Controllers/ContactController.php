@@ -127,18 +127,18 @@ class ContactController extends Controller
     public function edit($id)
     {
         $contact = Contact::with('organisation')->findOrFail($id);
-        return response()->json($contact);
+        return view('edit_contact_modal', compact('contact'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, contact $id)
+    public function update(Request $request, $id)
     {
         $contact = Contact::findOrFail($id);
         $contact->update($request->all());
     
-        return response()->json(['success' => true]);
+        return redirect()->route('welcome')->with('success', 'Contact updated successfully.');
     }
 
     /**
