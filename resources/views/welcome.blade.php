@@ -84,12 +84,11 @@
                                     </td>
                                     <td >
                                         
-                                        <form action="{{ route('contact.destroy', $contact->id)}}" method="post">
+                                        <form id="deleteContactForm_{{ $contact->id }}" action="{{ route('contact.destroy', $contact->id) }}" method="post">
                                             @csrf
                                             @method('DELETE')
-                                            
-                                            <button class="btn btn-danger" type="submit" onclick="return confirm('Etes-vous sûr de la suppression?');">🗑️</button>
-                                    </form>
+                                            <button class="btn btn-danger" type="button" onclick="deleteContact({{ $contact->id }});">🗑️</button>
+                                        </form>
                                     </td>
                                     </tr>
                                     </tbody>
@@ -168,6 +167,23 @@
     @include('add_contact_modal') <!-- Include the modal here -->
     @include('edit_contact_modal')
     @section('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function deleteContact(contactId) {
+        Swal.fire({
+            title: 'Etes-vous sûr de la suppression?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Oui',
+            cancelButtonText: 'Non',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Submit the form associated with the contact ID
+                document.getElementById('deleteContactForm_' + contactId).submit();
+            }
+        });
+    }
+</script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
         const editButtons = document.querySelectorAll('.editButton');

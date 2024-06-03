@@ -35,14 +35,23 @@
                                         <div class="col-span-12">
                                             <label for="cle" class="block text-sm font-medium text-gray-700">Cle</label>
                                             <input type="text" name="cle" id="cle" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm">
+                                            @error('cle')
+                                                <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                                            @enderror
                                         </div>
                                         <div class="col-span-6">
                                             <label for="nom" class="block text-sm font-medium text-gray-700">Nom</label>
                                             <input type="text" name="nom" id="nom" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm">
+                                            @error('nom')
+                                                <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                                            @enderror
                                         </div>
                                         <div class="col-span-6">
                                             <label for="prenom" class="block text-sm font-medium text-gray-700">Prenom</label>
                                             <input type="text" name="prenom" id="prenom" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm">
+                                            @error('prenom')
+                                            <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                                        @enderror
                                         </div>
                                         <div class="col-span-12">
                                             <label for="organisation_id" class="block text-sm font-medium text-gray-700">Organisation</label>
@@ -52,22 +61,37 @@
                                                     <option value="{{ $contact->organisation->id }}">{{ $contact->organisation->nom }}</option>
                                                 @endforeach
                                             </select>
+                                            @error('organisation_id')
+                                            <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                                        @enderror
                                         </div>
                                         <div class="col-span-6">
                                             <label for="e_mail" class="block text-sm font-medium text-gray-700">E-mail</label>
                                             <input type="email" name="e_mail" id="e_mail" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm">
+                                            @error('e_mail')
+                                            <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                                        @enderror
                                         </div>
                                         <div class="col-span-6">
                                             <label for="telephone_fixe" class="block text-sm font-medium text-gray-700">Telephone fixe</label>
                                             <input type="text" name="telephone_fixe" id="telephone_fixe" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm">
+                                            @error('telephone_fixe')
+                                            <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                                        @enderror
                                         </div>
                                         <div class="col-span-6">
                                             <label for="service" class="block text-sm font-medium text-gray-700">Service</label>
                                             <input type="text" name="service" id="service" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm">
+                                            @error('service')
+                                            <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                                        @enderror
                                         </div>
                                         <div class="col-span-6">
                                             <label for="fonction" class="block text-sm font-medium text-gray-700">Fonction</label>
                                             <input type="text" name="fonction" id="fonction" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm">
+                                            @error('fonction')
+                                            <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                                        @enderror
                                         </div>
                                     </div>
                                     <div class="mt-4 flex justify-between">
