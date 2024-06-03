@@ -29,20 +29,45 @@
             <table class="table-auto min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                     <tr>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            <a href="{{ request()->fullUrlWithQuery(['sort' => 'id']) }}">ID</a>
+                        <th scope="col" class="relative px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <a href="{{ request()->fullUrlWithQuery(['sort' => 'id']) }}"> ID</a>
+                            @if(request('sort') == 'id')
+                                <span class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2">
+                                    <span class="inline-block h-3 border-l border-t border-gray-500"></span>
+                                    <span class="inline-block w-3 h-3 bg-gray-500 transform rotate-45"></span>
+                                </span>
+                            @endif
                         </th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th scope="col" class="relative px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             <a href="{{ request()->fullUrlWithQuery(['sort' => 'nom']) }}">NOM DU CONTACT</a>
+                            @if(request('sort') == 'nom')
+                                <span class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2">
+                                    <span class="inline-block h-3 border-l border-t border-gray-500"></span>
+                                    <span class="inline-block w-3 h-3 bg-gray-500 transform rotate-45"></span>
+                                </span>
+                            @endif
                         </th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th scope="col" class="relative px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             <a href="{{ request()->fullUrlWithQuery(['sort' => 'organisation_id']) }}">SOCIETE</a>
+                            @if(request('sort') == 'organisation_id')
+                                <span class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2">
+                                    <span class="inline-block h-3 border-l border-t border-gray-500"></span>
+                                    <span class="inline-block w-3 h-3 bg-gray-500 transform rotate-45"></span>
+                                </span>
+                            @endif
                         </th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th scope="col" class="relative px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             <a href="{{ request()->fullUrlWithQuery(['sort' => 'statut']) }}">STATUS</a>
+                            @if(request('sort') == 'statut')
+                                <span class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2">
+                                    <span class="inline-block h-3 border-l border-t border-gray-500"></span>
+                                    <span class="inline-block w-3 h-3 bg-gray-500 transform rotate-45"></span>
+                                </span>
+                            @endif
                         </th>
                     </tr>
                 </thead>
+                
                 <tbody class="bg-white divide-y divide-gray-200">
                     @foreach ($contacts as $contact)
                         <tr>
